@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import lighthouse from 'lighthouse';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core'; // ✅ use puppeteer-core
 import pool from '../../src/lib/db';
 
 interface IssueToInsert {
@@ -23,10 +23,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let browser;
   try {
-    // Launch Chromium via Puppeteer
+    // ✅ Hardcode executablePath to Puppeteer's installed Chrome on Render
     browser = await puppeteer.launch({
+      executablePath: '/opt/render/.cache/puppeteer/chrome/linux-137.0.7151.55/chrome-linux64/chrome',
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      headless: 'new' as any, // or headless: true
+      headless: 'new' as any,
     });
 
     const endpoint = browser.wsEndpoint();
@@ -87,13 +88,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     } catch (dbError) {
       await client.query('ROLLBACK');
-
-      if (dbError instanceof Error) {
-        throw new Error('Database transaction failed: ' + dbError.message);
-      } else {
-        throw new Error('Database transaction failed: ' + String(dbError));
-      }
-
+      throw new Error('Database transaction failed: ' + (dbError instanceof Error ? dbError.message : String(dbError)));
     } finally {
       client.release();
     }
@@ -105,3 +100,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (browser) await browser.close();
   }
 }
+
