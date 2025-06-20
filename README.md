@@ -27,27 +27,6 @@ A11y Analyzer is a full-stack web tool that evaluates website accessibility usin
 
 ---
 
-## 📂 Folder Structure
-
-```
-
-accessibility-analyzer-frontend/
-├── pages/
-│   ├── index.tsx            # Home page with scan form
-│   ├── dashboard.tsx        # Past analyses list
-│   ├── analysis/\[id].tsx    # Detailed report view
-│   └── api/                 # API routes
-│       ├── analyze.ts       # Run scan and store data
-│       ├── analyses.ts      # Get summaries
-│       └── analysis/\[id].ts # Get detailed report
-├── src/components/          # Reusable UI components
-├── src/lib/db.ts            # PostgreSQL DB connection
-├── styles/                  # Global styles
-├── public/                  # Static assets
-
-````
-
----
 
 ## ⚙️ Setup & Run Locally
 
