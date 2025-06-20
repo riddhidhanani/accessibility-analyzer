@@ -1,8 +1,20 @@
 
+
+
 # A11y Analyzer
 
 A11y Analyzer is a full-stack web tool that evaluates website accessibility using Google Lighthouse and Deque's Axe-core. Users can scan URLs, view automated audit reports, and explore detailed issue breakdowns categorized by severity and accessibility rules.
 
+## 📸 Screenshots
+
+### 🔍 Home Page
+![Homepage](./screenshots/homepage.png)
+
+### 📊 Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### 📋 Detailed Report
+![Report](./screenshots/report.png)
 
 
 ## 🚀 Features
