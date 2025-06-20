@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import lighthouse from 'lighthouse';
-import puppeteer from 'puppeteer-core'; // ✅ use puppeteer-core
+import puppeteer from 'puppeteer'; 
 import pool from '../../src/lib/db';
 
 interface IssueToInsert {
@@ -23,9 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let browser;
   try {
-    // ✅ Hardcode executablePath to Puppeteer's installed Chrome on Render
     browser = await puppeteer.launch({
-      executablePath: '/opt/render/.cache/puppeteer/chrome/linux-137.0.7151.55/chrome-linux64/chrome',
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
       headless: 'new' as any,
     });
@@ -44,6 +42,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const lhr = result.lhr;
     const accessibilityScore = ((lhr.categories.accessibility?.score ?? 0) * 100).toFixed(2);
 
+
+    console.log('🧪 DATABASE_URL (from analyze.ts):', process.env.DATABASE_URL);
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
